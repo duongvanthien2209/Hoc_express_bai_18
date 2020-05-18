@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
+// Upload file
+const multer = require('multer');
+
+const upload = multer({ dest: './public/uploads/' });
+
 // Controllers
 const authController = require('../controllers/auth.controller');
 
@@ -15,6 +20,6 @@ router.post('/login', authValidate.postLogin, authController.postLogin);
 // Create
 router.get('/create', authController.getCreate);
 
-router.post('/create', authValidate.postCreate, authController.postCreate);
+router.post('/create', upload.single('avatar'), authValidate.postCreate, authController.postCreate);
 
 module.exports = router;

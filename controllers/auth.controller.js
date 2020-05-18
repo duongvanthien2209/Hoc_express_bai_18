@@ -1,5 +1,14 @@
 require('dotenv').config(); // Đọc file .env
 
+// Upload file lên server dùng Cloudinary
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
+});
+
 // Lowdb
 const db = require('../db');
 
@@ -65,7 +74,9 @@ module.exports.getCreate = function (req, res) {
 module.exports.postCreate = async function (req, res) {
     var id = shortid.generate();
     var password = await bcrypt.hash(req.body.password, saltRounds);
+    var result = await cloudinary.uploader.upload(req.file.path);
+    var avatar = result.url;
 
-    db.get('users').push({ id, name: req.body.name, password, email: req.body.email, wrongLoginCount: 0 }).write();
+    db.get('users').push({ id, name: req.body.name, password, email: req.body.email, avatar, wrongLoginCount: 0 }).write();
     res.redirect('/auth/login');
 }

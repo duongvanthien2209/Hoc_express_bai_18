@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 
-// Set viw engine
+// Set view engine
 app.set('view engine', 'pug');
 app.set('views', './views');
 

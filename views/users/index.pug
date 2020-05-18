@@ -3,12 +3,15 @@ extends ../layouts/default.pug
 block Content
     table.table
         thead
+            th Avatar
             th Tên
             th Email
             th Xóa
         tbody
             each user in users
                 tr
+                    td
+                        img(src= user.avatar?user.avatar:'https://loremflickr.com/320/240' style='height: 50px; width: 50px;' alt='No')
                     td= user.name
                     td= user.email
                     td
