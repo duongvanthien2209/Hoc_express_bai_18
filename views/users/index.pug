@@ -1,0 +1,15 @@
+extends ../layouts/default.pug
+
+block Content
+    table.table
+        thead
+            th Tên
+            th Email
+            th Xóa
+        tbody
+            each user in users
+                tr
+                    td= user.name
+                    td= user.email
+                    td
+                        a.btn.btn-danger(href='/users/delete/' + user.id) Xóa
