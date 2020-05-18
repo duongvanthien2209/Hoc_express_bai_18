@@ -1,3 +1,5 @@
+require('dotenv').config(); // Đọc file .env
+
 // Lowdb
 const db = require('../db');
 
@@ -7,6 +9,10 @@ const shortid = require('shortid');
 // bcrypt - Dùng mã hóa mật khẩu
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+
+// Sendgrid - Dùng để gởi email đến người dùng khi họ nhập sai quá số lần quy định
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 module.exports.getLogin = function (req, res) {
     res.render('auth/login');
@@ -22,6 +28,14 @@ module.exports.postLogin = async function (req, res) {
     }
 
     if (user.wrongLoginCount >= 4) {
+        const msg = {
+            to: email,
+            from: 'duongvanthienbkhoa@gmail.com',
+            subject: 'Sending with Twilio SendGrid is Fun',
+            text: 'and easy to do anywhere, even with Node.js',
+            html: '<strong>Cảnh báo! Bạn đã nhập sai quá số lần quy định</strong>',
+        };
+        sgMail.send(msg).catch(function (error) { console.log(error.response.body) });
         res.send('Bạn đã nhập sai quá số lần quy định');
         return;
     }
