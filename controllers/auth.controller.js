@@ -64,7 +64,7 @@ module.exports.postLogin = async function (req, res) {
     }
 
     res.cookie('userId', user.id, { signed: true });
-    res.redirect('/');
+    res.redirect('/books/?page=1');
 }
 
 module.exports.getCreate = function (req, res) {

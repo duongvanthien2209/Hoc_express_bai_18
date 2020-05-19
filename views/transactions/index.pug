@@ -1,0 +1,21 @@
+extends ../layouts/default.pug
+
+block Content
+    table.table
+        thead
+            th Id
+            th Session
+            th User
+            th Sách
+            th Số lượng
+            th Xóa
+        tbody
+            each transaction in transactions
+                tr
+                    td= transaction.id
+                    td= transaction.sessionid
+                    td= transaction.userName
+                    td= transaction.bookName
+                    td= transaction.sluong
+                    td
+                        a.btn.btn-danger(href='/transactions/delete/' + transaction.id) Xóa

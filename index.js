@@ -23,14 +23,26 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Routes
 const authRoute = require('./routes/auth.route');
 const userRoute = require('./routes/user.route');
+const bookRoute = require('./routes/book.route');
+const cartRoute = require('./routes/cart.route');
+const transactionRoute = require('./routes/transaction.route');
 
 // Middlewares
 const authMiddleware = require('./middlewares/auth.middleware');
+const sessionMiddleware = require('./middlewares/session.middleware');
 
 // Validations
 const userValidate = require('./validations/user.validate');
 
+app.use(sessionMiddleware.checkSession);
+
 app.use('/auth', authRoute);
+
+app.use('/books', bookRoute);
+
+app.use('/cart', cartRoute);
+
+app.use('/transactions', transactionRoute);
 
 app.use(authMiddleware.checkLogin);
  

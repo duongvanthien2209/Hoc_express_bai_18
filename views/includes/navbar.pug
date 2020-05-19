@@ -7,6 +7,15 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
             li.nav-item
                 a.nav-link(href='/') Home
             li.nav-item
-                a.nav-link(href='#' class= user.isAdmin?'':'disabled') User
+                a.nav-link(href='/books/?page=1') Books
+            if session
+                li.nav-item.dropdown
+                    a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false') Cart
+                    ul.dropdown-menu(aria-labelledby='navbarDropdown')
+                        each item in session
+                            li.dropdown-item= item
+                        a.btn.btn-success(href='/cart/addAll') Thuê
+        li.nav-item
+            a.nav-link(href='#' class= user?user.isAdmin?'':'disabled':'d-none') User
         if user
             p= user.name
